@@ -1,3 +1,4 @@
+% plots Radars based on radarData.mat
 load radarData.mat
 close all hidden
 grid on

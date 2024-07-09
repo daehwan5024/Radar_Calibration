@@ -1,6 +1,5 @@
 function [triangleList] = getTriangleList(distance)
-%TRIANGLELIST 이 함수의 요약 설명 위치
-%   자세한 설명 위치
+% List of all possible triangle pairs
 n = width(distance);
 triangleList = double.empty;
 for i=1:n
@@ -9,7 +8,6 @@ for i=1:n
             a=distance(i, j); b=distance(j,k); c=distance(k,i); s=(a+b+c)/2;
             area = sqrt(s*(s-a)*(s-b)*(s-c));
             if ~isreal(area)
-                fprintf("FAILED")
                 continue
             end
             triangleList = [triangleList;area, k, j, i];

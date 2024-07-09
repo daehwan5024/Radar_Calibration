@@ -1,4 +1,6 @@
 % Makes random data for testing
+
+% Save previous file based on time
 if isfile("radarData.mat")
     if ~exist("prevData", "dir")
         mkdir("prevData")
@@ -11,6 +13,8 @@ if isfile("radarData.mat")
     fileName = strcat("prevData/", timeSTR, ".mat");
     movefile("radarData.mat", fileName);
 end
+
+% Generate Datas
 num_radar = 8;
 posAbsolute = rand(3, num_radar);
 posAbsolute(1:2, :) = posAbsolute(1:2, :) * 20 - 10;
@@ -18,10 +22,11 @@ posAbsolute(3,1:end-1) = posAbsolute(3,1:end-1) + 2.5;
 
 distAbsolute = pairwiseDist(posAbsolute);
 distMeasured = zeros(num_radar);
+
 % add noise to distance
 for i=1:num_radar
     for j=1:i-1
-        measurementError = normrnd(0, 1/30);
+        measurementError = normrnd(0, 1/100);
         distMeasured(i, j) = distAbsolute(i, j) + measurementError;
         distMeasured(j, i) = distMeasured(i, j);
     end
