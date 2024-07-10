@@ -26,7 +26,7 @@ distMeasured = zeros(num_radar);
 % add noise to distance
 for i=1:num_radar
     for j=1:i-1
-        measurementError = normrnd(0, 1/100);
+        measurementError = normrnd(0, 1/30);
         distMeasured(i, j) = distAbsolute(i, j) + measurementError;
         distMeasured(j, i) = distMeasured(i, j);
     end
