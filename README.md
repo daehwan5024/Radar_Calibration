@@ -1,6 +1,12 @@
 Radar Auto Calibration
 =======================
-File discription
+
+How to use
+-----------
+run `RadarDataGenerator.m` This wil create `radarData.mat` file.
+After `radarData.m` file is created, run `GradientDOP.mlx` or `GradientTriangleSize.mlx`
+
+Files
 -----------------
 `RadarDataGenerator.m` : 
 Generates random data and store previous data at prevData folder
@@ -15,7 +21,7 @@ Calculate position using PDOP and gradient descent
 Calculate position using TriangleSize and gradient descent
 
 Functions
-
+---------------
 `coordinatTransform.m` :
 returns 4x4 Matrix to transform coordiante 
 
@@ -40,7 +46,3 @@ return NxN matrix of distance between radars, when position is given
 `trilateration.m`:
 calculate position using 3 points and distance from each point
 
-How to use
------------
-run `RadarDataGenerator.m` This wil create `radarData.mat` file.
-After `radarData.m` file is created, run `GradientDOP.mlx` or `GradientTriangleSize.mlx`
