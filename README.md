@@ -46,3 +46,5 @@ return NxN matrix of distance between radars, when position is given
 `trilateration.m`:
 calculate position using 3 points and distance from each point
 
+`addNoise.m` :
+add random noise to given pairwise Distance
