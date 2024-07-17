@@ -4,7 +4,8 @@
 
 run `RadarDataGenerator.m` This wil create `radarData.mat` file.
 
-After `radarData.m` file is created, run `GradientDOP.mlx` or `GradientTriangleSize.mlx`
+After `radarData.m` file is created, run `GradientDOP.mlx` or `GradientTriangleSize.mlx`\
+(Matlab editor is needed to run `.mlx` files)
 
 ## Files
 
@@ -28,7 +29,7 @@ returns 4x4 Matrix to transform coordiante
 `getDOPList.m` :
 returns List of DOP for all possible combination
 
-`getTriangle.m` : 
+`getTriangle.m` :
 returns three points of a triangle cooresponding to the three input distance
 
 `getTriangleList.m` :
@@ -37,7 +38,7 @@ returns List of all triangles for all possible combination
 `insertOrder.m` :
 returns List of all possible orders of radar calibration
 
-`pairwiseDist.m` : 
+`pairwiseDist.m` :
 return NxN matrix of distance between radars, when position is given
 
 `selectBetter.m` :
