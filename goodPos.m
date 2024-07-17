@@ -1,13 +1,12 @@
-function parsave(fname, a, b, c)
-  save(fname, 'a', 'b', 'c')
+function parsave(fname, posAbsolute, total_err, orders_abs)
+  save(fname, 'posAbsolute', 'total_err', 'orders_abs')
 end
-tic
-parfor i=1:40
+parfor i=1:100
   [num_radar, posAbsolute, distAbsolute, distMeasured] = RadarDataGenerator();
   total_err = 0;
   PDOPList_abs = getDOPList(distAbsolute);
   orders_abs = insertOrder(PDOPList_abs, num_radar);
-  for ii=1:15
+  for ii=1:20
     distMeasured = addNoise(distAbsolute);
     posCalibrated = calibratePDOP(distMeasured, num_radar);
 
@@ -38,4 +37,3 @@ parfor i=1:40
   fileName = strcat("StoredData\DOP_ERR_Relation\", timeSTR, ".mat");
   parsave(fileName, posAbsolute, total_err, orders_abs);
 end
-toc

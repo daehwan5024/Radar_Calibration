@@ -1,14 +1,10 @@
-function parsave(fname, a, b, c, d)
-  save(fname, 'a', 'b', 'c', 'd')
+function parsave(fname, rse, posAbsolute, distMeasured, posCalibrated)
+  save(fname, 'rse', 'posAbsolute', 'distMeasured', 'posCalibrated')
 end
 tic
 parfor k=1:10
     [num_radar, posAbsolute, distAbsolute, distMeasured] = RadarDataGenerator();
     
-    pdopList = getDOPList(distMeasured);
-    orders = insertOrder(pdopList, num_radar);
-    
-    order = orders(1,2:end);
     posCalibrated = calibratePDOP(distMeasured, num_radar);
     
     % for comparison
