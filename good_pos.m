@@ -36,8 +36,11 @@ parfor i=1:100
   end
   Ts = datetime();
   Ts.Format = 'uuuu/MM/dd HH:mm:ss.SSS';
-  timeStr = string(Ts);
-  timeSTR = strrep(timeSTR, "/ .:", "_");
+  timeSTR = string(Ts);
+  timeSTR = strrep(timeSTR, "/", "_");
+  timeSTR = strrep(timeSTR, " ", "_");
+  timeSTR = strrep(timeSTR, ":", "_");
+  timeSTR = strrep(timeSTR, ".", "_");
   file_name = strcat(file_name, "___", timeSTR);
   file_name = strcat(dataFolder, "/", file_name, ".mat");
   parsave(fileName, posAbsolute, total_err, orders_abs);

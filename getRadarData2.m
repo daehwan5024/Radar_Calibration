@@ -52,22 +52,22 @@ function[num_radar, num_bottom, posAbsolute, distAbsolute, distMeasured] = getRa
     theta = rand(1) * 2*pi;
     rotationMatrix = [cos(theta), -sin(theta), 0; sin(theta), cos(theta), 0; 0, 0, 1];
     if num_bottom == 1
-        posAbsolute = [posAbsolute, centerPos];
+        posAbsolute = [centerPos, posAbsolute];
     elseif num_bottom == 2
         posBottom = rotationMatrix * [-0.5, 0.5; 0, 0; 0,0] + centerPos;
-        posAbsolute = [posAbsolute, posBottom];
+        posAbsolute = [posBottom, posAbsolute];
     elseif num_bottom == 3
         posBottom = rotationMatrix * [0, -0.5, 0.5; 1/sqrt(3), -1/(2*sqrt(3)), -1/(2*sqrt(3)); 0,0,0] + centerPos;
-        posAbsolute = [posAbsolute, posBottom];
+        posAbsolute = [posBottom, posAbsolute];
     elseif num_bottom == 4
         posBottom = rotationMatrix * [0.5, 0.5, -0.5, -0.5; 0.5, -0.5, -0.5, 0.5; 0,0,0,0] + centerPos;
-        posAbsolute = [posAbsolute, posBottom];
+        posAbsolute = [posBottom, posAbsolute];
     else
         fprintf("Not done")
     end
 
     distAbsolute = getPairwiseDist(posAbsolute);
     distMeasured = getNoiseAdded(distAbsolute);
-    distMeasured(num_radar+1:end, num_radar+1:end) = distAbsolute(num_radar+1:end, num_radar+1:end);
+    distMeasured(1:num_bottom, 1:num_bottom) = distAbsolute(1:num_bottom, 1:num_bottom);
     
 end

@@ -25,4 +25,3 @@ rotations = [1,0,0;0,cosTheta3,-sinTheta3;0,sinTheta3,cosTheta3]*Tprime;
 transformMatrix(1:3,1:3) = inv(rotations);
 transformMatrix = translation*transformMatrix;
 end
-
