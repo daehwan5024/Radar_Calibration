@@ -1,22 +1,21 @@
-dataFolder = "StoredData/Dataset_Old";
+dataFolder = "StoredData/Dataset_New";
 if ~exist(dataFolder, 'dir')
     mkdir(dataFolder)
 end
 
 function parsave(fname, rse, posAbsolute, distMeasured, posCalibrated)
-  save(fname, 'rse', 'posAbsolute', 'distMeasured', 'posCalibrated')
+    save(fname, 'rse', 'posAbsolute', 'distMeasured', 'posCalibrated')
 end
+
 tic
 parfor k=1:20
-    [num_radar, posAbsolute, distAbsolute, distMeasured] = getRadarData();
-    
-    posCalibrated = getCalibratePDOP(distMeasured, num_radar);
-    
-    % for comparison
+    [num_radar, num_bottom, posAbsolute, distAbsolute, distMeasured] = getRadarData2(5, 3, 4);
+    posCalibrated = getCalibratePDOP(distMeasured, num_radar+num_bottom);
+
     T = getTransform(posAbsolute);
     T_r = getTransform(posCalibrated);
-    res = T_r\[posCalibrated;ones(1,num_radar)];
-    real = T\[posAbsolute;ones(1,num_radar)];
+    res = T_r\[posCalibrated;ones(1,num_radar+num_bottom)];
+    real = T\[posAbsolute;ones(1,num_radar+num_bottom)];
     res = res(1:3,:);
     real = real(1:3,:);
     res2 = [res(1:2,:); -res(3,:)];

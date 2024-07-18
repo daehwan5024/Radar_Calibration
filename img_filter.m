@@ -10,5 +10,4 @@ for k = 1 : length(files)
         status = copyfile(file_path, destFolder);
     end
     %fprintf('File #%d: %s\n', k, files(k).name);
-    k
 end

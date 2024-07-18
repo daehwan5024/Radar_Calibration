@@ -15,12 +15,36 @@ function[num_radar, num_bottom, posAbsolute, distAbsolute, distMeasured] = getRa
     elseif nargin == 3
         num_radar = varargin{1};
         num_bottom = varargin{2};
-        num_wall = varargin{3};
+        if varargin{3} > 4 || varargin{3} < 1
+            fprintf("Wrong wall number")
+        else
+            num_wall = varargin{3};
+        end
     end
+    rand_pos = rand(num_radar, 1) * 20 * num_wall;
+    if num_radar > num_wall
+        for i=1:num_wall
+            rand_pos(i) = rand(1) * 20 + 20*(i-1);
+        end
+    end
+    posAbsolute = rand(3, num_radar) + 2.5;
 
-    posAbsolute = rand(3, num_radar);
-    posAbsolute(1:2, :) = posAbsolute(1:2, :) * 20 - 10;
-    posAbsolute(3,:) = posAbsolute(3,:) + 2.5;
+    for i=1:num_radar
+        if rand_pos(i) <= 20
+            posAbsolute(1, i) = rand_pos(i) - 10;
+            posAbsolute(2, i) = -10;
+        elseif rand_pos(i) <= 40
+            posAbsolute(1, i) = 10;
+            posAbsolute(2, i) = rand_pos(i) - 30;
+            
+        elseif rand_pos(i) <= 60
+            posAbsolute(1, i) = 50 - rand_pos(i);
+            posAbsolute(2, i) = 10;
+        else
+            posAbsolute(1, i) = -10;
+            posAbsolute(2, i) = 70 - rand_pos(i);
+        end
+    end
 
     centerPos = rand(3,1);
     centerPos(3,1) = 0;

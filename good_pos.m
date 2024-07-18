@@ -34,11 +34,11 @@ parfor i=1:100
     end
         total_err = total_err + rse
   end
-  timeSTR = datestr(clock,'YYYY/mm/dd HH:MM:SS:FFF');
-  timeSTR = strrep(timeSTR, "/", "_");
-  timeSTR = strrep(timeSTR, " ", "_");
-  timeSTR = strrep(timeSTR, "-", "_");
-  timeSTR = strrep(timeSTR, ":", "_");
-  fileName = strcat(dataFolder, "/", timeSTR, ".mat");
+  Ts = datetime();
+  Ts.Format = 'uuuu/MM/dd HH:mm:ss.SSS';
+  timeStr = string(Ts);
+  timeSTR = strrep(timeSTR, "/ .:", "_");
+  file_name = strcat(file_name, "___", timeSTR);
+  file_name = strcat(dataFolder, "/", file_name, ".mat");
   parsave(fileName, posAbsolute, total_err, orders_abs);
 end
