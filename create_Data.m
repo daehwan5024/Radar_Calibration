@@ -10,7 +10,7 @@ tic
 parfor k=1:10
     [num_radar, posAbsolute, distAbsolute, distMeasured] = getRadarData();
     
-    posCalibrated = getCalibratedPDOP(distMeasured, num_radar);
+    posCalibrated = getCalibratePDOP(distMeasured, num_radar);
     
     % for comparison
     T = getTransform(posAbsolute);

@@ -1,4 +1,4 @@
-function [posCalibrated] = getCalibratedPDOP(distMeasured, num_radar)
+function [posCalibrated] = getCalibratePDOP(distMeasured, num_radar)
   % returns calibrated position
   % uses PDOP and gradient descent
   if num_radar < 3

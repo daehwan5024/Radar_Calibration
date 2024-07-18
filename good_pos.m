@@ -13,7 +13,7 @@ parfor i=1:100
   orders_abs = getInsertOrder(PDOPList_abs, num_radar);
   for ii=1:20
     distMeasured = getNoiseAdded(distAbsolute);
-    posCalibrated = getCalibratedPDOP(distMeasured, num_radar);
+    posCalibrated = getCalibratePDOP(distMeasured, num_radar);
 
     %for comparison
     T = getTransform(posAbsolute);
