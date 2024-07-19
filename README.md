@@ -76,3 +76,6 @@ returns 3 points based on distance
 
 `getTriangleList.m`\
 returns list of all possible triangles sorted by size
+
+## .py Files
+Mainly for changing or modifying stored data values

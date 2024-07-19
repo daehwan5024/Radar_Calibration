@@ -29,10 +29,6 @@ codegen/
 # Cache files
 *.slxc
 
-# python files
-Datachange.py
-Datashow.py
-
 # Cloud based storage dotfile
 .MATLABDriveTag
 
