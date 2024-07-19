@@ -3,8 +3,8 @@
 
 T = getTransform(posAbsolute);
 T_r = getTransform(posCalibrated);
-res = T_r\[posCalibrated;ones(1,num_radar+num_bottom)];
-real = T\[posAbsolute;ones(1,num_radar+num_bottom)];
+res = T_r*[posCalibrated;ones(1,num_radar+num_bottom)];
+real = T*[posAbsolute;ones(1,num_radar+num_bottom)];
 res = res(1:3,:);
 real = real(1:3,:);
 res2 = [res(1:2,:); -res(3,:)];

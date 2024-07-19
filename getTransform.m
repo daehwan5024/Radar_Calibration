@@ -23,5 +23,5 @@ sinTheta3 = -p3_prime(3)/sqrt(p3_prime(2)^2 + p3_prime(3)^2);
 
 rotations = [1,0,0;0,cosTheta3,-sinTheta3;0,sinTheta3,cosTheta3]*Tprime;
 transformMatrix(1:3,1:3) = inv(rotations);
-transformMatrix = translation*transformMatrix;
+transformMatrix = inv(translation*transformMatrix);
 end
