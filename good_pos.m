@@ -1,46 +1,31 @@
 dataFolder = "StoredData/Old";
 if ~exist(dataFolder, 'dir')
-  mkdir(dataFolder)
+    mkdir(dataFolder)
 end
 
 function parsave(fname, posAbsolute, total_err, orders_abs)
-  save(fname, 'posAbsolute', 'total_err', 'orders_abs')
+    save(fname, 'posAbsolute', 'total_err', 'orders_abs')
 end
 parfor i=1:100
-  [num_radar, posAbsolute, distAbsolute, distMeasured] = getRadarData();
-  total_err = 0;
-  PDOPList_abs = getPDOPList(distAbsolute);
-  orders_abs = getInsertOrder(PDOPList_abs, num_radar);
-  for ii=1:20
-    distMeasured = getNoiseAdded(distAbsolute);
-    posCalibrated = getCalibratePDOP(distMeasured, num_radar);
+    [num_radar, posAbsolute, distAbsolute, distMeasured] = getRadarData();
+    total_err = 0;
+    PDOPList_abs = getPDOPList(distAbsolute);
+    orders_abs = getInsertOrder(PDOPList_abs, num_radar);
+    for ii=1:20
+        distMeasured = getNoiseAdded(distAbsolute);
+        posCalibrated = getCalibratePDOP(distMeasured, num_radar);
 
-    %for comparison
-    T = getTransform(posAbsolute);
-    T_r = getTransform(posCalibrated);
-    res = T_r*[posCalibrated;ones(1,num_radar)];
-    real = T*[posAbsolute;ones(1,num_radar)];
-    res = res(1:3,:);
-    real = real(1:3,:);
-    res2 = [res(1:2,:); -res(3,:)];
-    if sqrt(sum((res - real).^2, "all")) < sqrt(sum((res2 - real).^2, "all"))
-        better1 = true;
-        difference = res - real(1:3,:);
-        rmse = sqrt(sum((res - real).^2, "all"))/num_radar;
-    else
-        better1 = false;
-        difference = res2 - real;
-        rmse = sqrt(sum((res2 - real).^2, "all"))/num_radar;
+        %for comparison
+        meanError = getDifference(posAbsolute, posCalibrated);
+        total_err = total_err + meanError;
     end
-        total_err = total_err + rse
-  end
-  Ts = datetime();
-  Ts.Format = 'uuuu/MM/dd HH:mm:ss.SSS';
-  timeSTR = string(Ts);
-  timeSTR = strrep(timeSTR, "/", "_");
-  timeSTR = strrep(timeSTR, " ", "_");
-  timeSTR = strrep(timeSTR, ":", "_");
-  timeSTR = strrep(timeSTR, ".", "_");
-  file_name = strcat(dataFolder, "/", timeSTR, ".mat");
-  parsave(file_name, posAbsolute, total_err, orders_abs);
+    Ts = datetime();
+    Ts.Format = 'uuuu/MM/dd HH:mm:ss.SSS';
+    timeSTR = string(Ts);
+    timeSTR = strrep(timeSTR, "/", "_");
+    timeSTR = strrep(timeSTR, " ", "_");
+    timeSTR = strrep(timeSTR, ":", "_");
+    timeSTR = strrep(timeSTR, ".", "_");
+    file_name = strcat(dataFolder, "/", timeSTR, ".mat");
+    parsave(file_name, posAbsolute, total_err, orders_abs);
 end

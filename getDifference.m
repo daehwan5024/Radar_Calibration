@@ -1,20 +1,20 @@
-function[rmse] = getDifference(input1, input2)
+function[difference] = getDifference(input1, input2)
     if ~isequal(size(input1), size(input2))
-        rmse = 0;
+        difference = 0;
         fprintf("Input size different\n");
         return
     end
     if height(input1) ~= 3
-        rmse = 0;
+        difference = 0;
         fprintf("Wrong Input\n");
         return
     end
     if width(input1) < 3
-        rmse = 0;
+        difference = 0;
         fprintf("Need more radar points")
         return
     end
-    rmse = double.empty;
+    best = [Inf, Inf, Inf, Inf];
     for i = 1:width(input1)
         for j=1:width(input1)
             for k=1:width(input1)
@@ -34,9 +34,11 @@ function[rmse] = getDifference(input1, input2)
                     d = sqrt(sum((trans1_r - trans2).^2, "all"));
                 end
                 d = d/width(input1);
-                rmse = [rmse; d, k, j, i];
+                if d < best(1,1)
+                    best = [d, k, j, i];
+                end
             end
         end
     end
-    rmse = sortrows(rmse);
+    difference = best;
 end

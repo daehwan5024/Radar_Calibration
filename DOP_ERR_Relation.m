@@ -1,19 +1,22 @@
-folderPath = 'StoredData\DOP_ERR_Relation';  % Specify your folder path here
-files = dir(fullfile(folderPath, '*.mat'));  % List all .txt files (adjust file extension as needed)
+folderPath = 'StoredData\**\';  % Specify your folder path here
+files = dir(fullfile(folderPath, '*.mat'));  % List all .mat files (adjust file extension as needed)
 
 
-DOP = double.empty;
+PDOP = double.empty;
 ERR = double.empty;
 for k = 1 : length(files)
-    file_path = strcat("StoredData\DOP_ERR_Relation\", files(k).name);
-    load(file_path, 'total_err', 'orders_abs')
-    
-    if ~isreal(total_err)  %|| b > 20
+    file_path = fullfile(files(k).folder, files(k).name);
+    load(file_path)
+    if ~exist('DOP', 'var')
         continue
     end
-    ERR = [ERR, total_err];
-    DOP = [DOP, orders_abs(1,1)];
+    if ~isreal(errorMean)  %|| b > 20
+        continue
+    end
+    ERR = [ERR, errorMean];
+    PDOP = [PDOP, DOP];
 end
-clearvars -except DOP ERR files
+clearvars -except PDOP ERR files
 
-plot(DOP, ERR, "r.")
+plot(PDOP, ERR, "r.")
+disp(mean(ERR))
