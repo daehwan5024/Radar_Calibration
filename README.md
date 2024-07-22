@@ -1,5 +1,17 @@
 # Radar Auto Calibration
 
+## How it works
+
+When 3 points and distance from 3 points to one unkown point are given, 3d position of the unkown point can be calculated. \
+Using this idea, when distance between radars are given, it is possible to calculate relative positions of the radars.
+
+The distance are measured data, which will contain errors. To minimize the error of positions, radar position is calculated with orders to minimize PDOP(position dilution of precision).\
+After 1st position is calculated, gradient descent is used to minimize the difference between measured distance and calculated distance(using radar position)
+
+Error of position is measured as the average of the distance between real radar position and calculated radar position.\
+In order to match the real data and the calibrated data, rotation and translation is used to match the 1st point to the origin, 2nd point to the x-axis and 3rd point to the xy-plane.\
+1st, 2nd, and 3rd point are selected that they minimize the error with given real and calibrated positions.
+
 ## How to use
 
 run `GradientDOP.mlx` or `GradientTriangleSize.mlx`\
@@ -9,11 +21,9 @@ Calibration can also be done by using `getCalibratedPDOP.m` or `getCalibratedTri
 
 ## Scripts
 
-`compare_DOP.m` :
-
 `create_Data.m`\
 Creates data containing radar position, noise and the calibrated result\
-Uses `parfor` for better performance `parallel computing toolbox` needed
+Uses `parfor` for better performance(`parallel computing toolbox` needed)
 
 `create_Data2.m`\
 Identical to `create_Data.m` expect that it uses `getRadarData2.m` instead of `getRadarData.m`
@@ -29,6 +39,10 @@ Filter dataset with imaginary calibration value
 
 `plotter.m`\
 Plots Data
+
+`variation.m`\
+changes number of radar on top, tag at bottom, number of walls radars are attached.
+Check the error as the variables are changed
 
 `GradientDOP.mlx`\
 Matlab Live Code file for calibration based on PDOP
@@ -50,11 +64,17 @@ Calibration based on PDOP. Uses gradient descent for better result
 `getCalibrateTriangleSize.m`\
 Calibration based on triangle size. Uses gradient descent for better result
 
+`getDifference.m`\
+returns difference of two position matrices. uses rotaion and translation to match matrices
+
 `getInsertOrder.m`\
 returns all possible insertion orders based on PDOP. Value is infinity if impossible
 
 `getNoiseAdded.m`\
 return value with noise added to real value
+
+`getNoiseAdded2.m`\
+return value with noise added to real value. Does not add noise to distance between bottom tags.
 
 `getPairwiseDist.m`\
 return distance of all radar pairs

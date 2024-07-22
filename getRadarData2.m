@@ -1,19 +1,19 @@
-function[num_radar, num_bottom, posAbsolute, distAbsolute, distMeasured] = getRadarData2(varargin)
+function[num_top, num_bottom, posAbsolute, distAbsolute, distMeasured] = getRadarData2(varargin)
     % input can be
-    % num_radar
-    % num_radar, num_bottom
-    % num_radar, num_bottom, use_wall
+    % num_top
+    % num_top, num_bottom
+    % num_top, num_bottom, use_wall
     % Makes random data for testing
     num_wall = 4;
-    num_radar = 4;
+    num_top = 4;
     num_bottom = 3;
     if nargin == 1
-        num_radar = varargin{1};
+        num_top = varargin{1};
     elseif nargin == 2
-        num_radar = varargin{1};
+        num_top = varargin{1};
         num_bottom = varargin{2};
     elseif nargin == 3
-        num_radar = varargin{1};
+        num_top = varargin{1};
         num_bottom = varargin{2};
         if varargin{3} > 4 || varargin{3} < 1
             fprintf("Wrong wall number")
@@ -21,15 +21,15 @@ function[num_radar, num_bottom, posAbsolute, distAbsolute, distMeasured] = getRa
             num_wall = varargin{3};
         end
     end
-    rand_pos = rand(num_radar, 1) * 20 * num_wall;
-    if num_radar > num_wall
+    rand_pos = rand(num_top, 1) * 20 * num_wall;
+    if num_top >= num_wall
         for i=1:num_wall
             rand_pos(i) = rand(1) * 20 + 20*(i-1);
         end
     end
-    posAbsolute = rand(3, num_radar) + 2.5;
+    posAbsolute = rand(3, num_top) + 2.5;
 
-    for i=1:num_radar
+    for i=1:num_top
         if rand_pos(i) <= 20
             posAbsolute(1, i) = rand_pos(i) - 10;
             posAbsolute(2, i) = -10;
@@ -67,7 +67,6 @@ function[num_radar, num_bottom, posAbsolute, distAbsolute, distMeasured] = getRa
     end
 
     distAbsolute = getPairwiseDist(posAbsolute);
-    distMeasured = getNoiseAdded(distAbsolute);
-    distMeasured(1:num_bottom, 1:num_bottom) = distAbsolute(1:num_bottom, 1:num_bottom);
+    distMeasured = getNoiseAdded2(distAbsolute, num_bottom);
     
 end
