@@ -3,7 +3,6 @@ close all hidden
 grid on
 hold on
 plot3(posAbsolute(1,:), posAbsolute(2,:), posAbsolute(3,:), "b.")
-getTransform(errors)
 % if better1
 %     plot3(res(1,:), res(2,:), res(3,:), "r.")
 % else

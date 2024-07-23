@@ -33,5 +33,4 @@ codegen/
 .MATLABDriveTag
 
 #Data files
-StoredData/
-prevData/
+StoredData/[a-z]*

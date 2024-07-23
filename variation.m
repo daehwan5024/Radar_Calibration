@@ -5,12 +5,12 @@ function parsave(fname, errors, distMeasured, posCalibrated, posAbsolute)
     end
     save(fname, 'errors','distMeasured', 'posCalibrated', 'posAbsolute')
 end
-for num_bottom = 2:4
-    for num_top = 4:6
-        for num_wall = 1:4
+for num_bottom = 3
+    for num_top = 6
+        for num_wall = 4
             dataFolder = strcat("StoredData/", string(num_bottom), "_", string(num_top), "_", string(num_wall));
             tic
-            parfor k=1:10
+            for k=1
                 [~, ~, posAbsolute, distAbsolute, ~] = getRadarData2(num_top, num_bottom, num_wall);
 
                 iteration = 5;
@@ -18,7 +18,7 @@ for num_bottom = 2:4
                 distMeasured = zeros(num_top+num_bottom, num_top+num_bottom, iteration);
                 errors = zeros(4, iteration);
                 for i=1:iteration
-                    distMeasured(:,:,i) = getNoiseAdded(distAbsolute);
+                    distMeasured(:,:,i) = getNoiseAdded2(distAbsolute, num_bottom);
                     posCalibrated(:,:,i) = getCalibratePDOP(distMeasured(:,:,i), num_top+num_bottom);
                     diff = getDifference(posAbsolute, posCalibrated(:,:,i));
                     errors(:,i) = diff;

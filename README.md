@@ -19,6 +19,32 @@ This will generate random data and run calibration process
 
 Calibration can also be done by using `getCalibratedPDOP.m` or `getCalibratedTrianlgeSize` function
 
+## Data Files
+
+Data Files are stored inside `Stored Data` folder.\
+Each folder will have subfolders of format `[0-9]_[0-9]_[0-9]`.\
+The First number is the number of tags at the bottom($\le 4$)\
+Second number is the number of radars on top($\le 6$)\
+Last number is number of walls that the radars can be attached to($\le 4$)
+
+Each files in the subfolders are `.mat` files. Each file contains 4 matrices.\
+The 4 matrices are `errors`,`distMeasured`, `posCalibrated`, and `posAbsolute`
+
+`posAbsolute`: $3\times n$ matrix that holds absolute position of tags and radars.\
+Each column is a value that corresponds to `x,y,z` value of the position.\
+Tags positions are placed at the front
+
+`distMeasured`: $5\times n \times n$ matrix that holds measured distance.\
+Errors in measured distance are normal with $3\sigma = 10cm$. Distance between tags have 0 error since they aren't a meausred value.\
+5 meaurements are stored, and each is represented as a $n\times n$ matrix
+
+`posCalibrated`: $5\times 3 \times n$ matrix that holds calibrated position.\
+Each $3\times n$ matrix holds the calibrated position of the corresponding `distMeasured`.\
+Values may be imaginary
+
+`errors`: $4\times 5$ matrix that holds error between `posAbsolute` and `posCalibrated`\
+Each column cotains mean error, and 3 points that are used to rotate and translate the position
+
 ## Scripts
 
 `create_Data.m`\
@@ -99,3 +125,13 @@ returns list of all possible triangles sorted by size
 
 ## .py Files
 Mainly for changing or modifying stored data values
+ 
+ ## Possible errors
+
+ Calibrated position using `getCalibratedPDOP.m` may result in imaginary values.
+ This is because measured distance contain errors.
+ When imaginary values are returned, we may use different orders for calibration, or measure the distance again.
+
+ When calibrating `Warning: Matrix is singular to working precision` may appear on `getPDOPList.m`.\
+ This occurs because when 4 points are on 1 plane, PDOP value will diverge.\
+ This warning is not an error, and calibration process will run fine with this warning
