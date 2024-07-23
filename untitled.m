@@ -1,2 +1,5 @@
-load StoredData\4_4_1\2024_07_23_11_24_02_548.mat
-podp_list = getPDOPList(distMeasured(:,:,4));
+load StoredData\2_5_1\2024_07_23_10_55_58_357.mat
+distAbsolute = getPairwiseDist(posAbsolute);
+for i=1:5
+    rmse(distAbsolute, distMeasured(:,:,i),  "all")
+end

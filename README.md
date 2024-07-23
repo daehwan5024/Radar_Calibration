@@ -124,9 +124,10 @@ returns 3 points based on distance
 returns list of all possible triangles sorted by size
 
 ## .py Files
+
 Mainly for changing or modifying stored data values
- 
- ## Possible errors
+
+## Possible errors
 
  Calibrated position using `getCalibratedPDOP.m` may result in imaginary values.
  This is because measured distance contain errors.
