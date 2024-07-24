@@ -1,5 +1,6 @@
-load StoredData\2_5_1\2024_07_23_10_55_58_357.mat
-distAbsolute = getPairwiseDist(posAbsolute);
-for i=1:5
-    rmse(distAbsolute, distMeasured(:,:,i),  "all")
-end
+% [num_radar, num_bottom, posAbsolute, distAbsolute, distMeasured] = getRadarData2(6, 3, 4);
+distMeasured = getNoiseAdded2(distAbsolute, num_bottom);
+
+posCalibrated = getCalibratePDOP(distMeasured, num_radar+num_bottom);
+
+meanError = getDifference(posAbsolute, posCalibrated);

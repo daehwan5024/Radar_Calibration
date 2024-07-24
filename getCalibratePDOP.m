@@ -7,6 +7,7 @@ function [posCalibrated] = getCalibratePDOP(distMeasured, num_radar)
 
     pdopList = getPDOPList(distMeasured);
     orders = getInsertOrder(pdopList, num_radar);
+    disp(orders(1,1))
     posCalibrated = zeros(3, num_radar);
 
     function[radar1, radar2, radar3] = findPairs(target, usable)
@@ -35,9 +36,9 @@ function [posCalibrated] = getCalibratePDOP(distMeasured, num_radar)
         target_radar = order(i);
         [radar1, radar2, radar3] = findPairs(target_radar, order(1:i-1));
         if radar1 == 0 || radar2 == 0 || radar3 == 0
-            posCalibrated(1,1) = i;
-            posCalibrated(2,1) = i;
-            posCalibrated(3,1) = i;
+            posCalibrated(1,1) = 1i;
+            posCalibrated(2,1) = 1i;
+            posCalibrated(3,1) = 1i;
             return
         end
         pos1 = getTrilateration(posCalibrated(:,[radar1, radar2, radar3]), ...
@@ -54,6 +55,9 @@ function [posCalibrated] = getCalibratePDOP(distMeasured, num_radar)
             loss_t = zeros(3, 1);
             for j=1:num_radar
                 if i==j
+                    continue
+                end
+                if isnan(distMeasured(i, j))
                     continue
                 end
                 dist_ij = norm(posCalibrated(:,i) - posCalibrated(:,j));

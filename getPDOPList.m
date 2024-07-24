@@ -2,6 +2,12 @@ function [pdopList] = getPDOPList(distance)
 %List pdop of all possible pairs.
 num_radar = width(distance);
     function[pos1, pos2, pos3] = posRelative(target, radar1, radar2, radar3)
+        if isnan(distance(radar1, radar2)) || isnan(distance(radar1, radar3)) || isnan(distance(radar1, target)) || isnan(distance(radar2, radar3)) || isnan(distance(radar2, target)) || isnan(distance(radar3, target))
+            pos1 = [1j;1j;1j];
+            pos2 = [1j;1j;1j];
+            pos3 = [1j;1j;1j];
+            return
+        end
         [x2, x3, y3] = getTriangle(distance(radar1, radar2), distance(radar2, radar3), distance(radar1, radar3));
         targetPos = getTrilateration([0;0;0], [x2;0;0], [x3;y3;0],...
                     distance(target, radar1), distance(target, radar2), distance(target, radar3));
@@ -15,12 +21,16 @@ num_radar = width(distance);
         pos2 = [x2;0;0] - targetPos;
         pos3 = [x3;y3;0] - targetPos;
     end
+
 pdopList = double.empty;
 for i=1:num_radar
     for j=1:i-1
         for k=1:j-1
             for radar=1:num_radar
                 if i == radar||j==radar||k==radar
+                    continue
+                end
+                if isnan(distance(i, j)) || isnan(distance(j, k)) || isnan(distance(k, i))
                     continue
                 end
                 [radar1, radar2, radar3] = posRelative(radar, i, j, k);
