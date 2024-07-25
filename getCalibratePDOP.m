@@ -7,7 +7,6 @@ function [posCalibrated] = getCalibratePDOP(distMeasured, num_radar)
 
     pdopList = getPDOPList(distMeasured);
     orders = getInsertOrder(pdopList, num_radar);
-    disp(orders(1,1))
     posCalibrated = zeros(3, num_radar);
 
     function[radar1, radar2, radar3] = findPairs(target, usable)

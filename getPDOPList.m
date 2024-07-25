@@ -30,9 +30,6 @@ for i=1:num_radar
                 if i == radar||j==radar||k==radar
                     continue
                 end
-                if isnan(distance(i, j)) || isnan(distance(j, k)) || isnan(distance(k, i))
-                    continue
-                end
                 [radar1, radar2, radar3] = posRelative(radar, i, j, k);
                 if ~isreal(radar1)
                     continue

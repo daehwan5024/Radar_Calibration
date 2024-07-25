@@ -4,13 +4,15 @@ function [posCalibrated] = getCalibrateTriangleSize(distMeasured, num_radar)
     if num_radar < 3
         fprintf("Nead at least 3 radars\n")
     end
+    posCalibrated = zeros(3, num_radar);
     triangleList = getTriangleList(distMeasured);
 
     radar1 = triangleList(1, 2);
     radar2 = triangleList(1, 3);
     radar3 = triangleList(1, 4);
-
+    
     [x2, x3, y3] = getTriangle(distMeasured(radar1, radar2), distMeasured(radar2, radar3), distMeasured(radar1, radar3));
+    known = false(num_radar);
     known(radar1) = true;
 
     posCalibrated(1,radar2) = x2;
@@ -57,6 +59,9 @@ function [posCalibrated] = getCalibrateTriangleSize(distMeasured, num_radar)
             loss_t = zeros(3, 1);
             for j=1:num_radar
                 if i==j
+                    continue
+                end
+                if isnan(distMeasured(i, j))
                     continue
                 end
                 dist_ij = norm(posCalibrated(:,i) - posCalibrated(:,j));
