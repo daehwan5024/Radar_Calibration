@@ -12,7 +12,7 @@ function [posCalibrated] = getCalibrateTriangleSize(distMeasured, num_radar)
     radar3 = triangleList(1, 4);
     
     [x2, x3, y3] = getTriangle(distMeasured(radar1, radar2), distMeasured(radar2, radar3), distMeasured(radar1, radar3));
-    known = false(num_radar);
+    known = false(1, num_radar);
     known(radar1) = true;
 
     posCalibrated(1,radar2) = x2;
@@ -39,7 +39,7 @@ function [posCalibrated] = getCalibrateTriangleSize(distMeasured, num_radar)
             known(target_radar) = true;
         end
         triangle_found = false;
-        while triangleList_index <= height(triangleList)
+        while triangleList_index < height(triangleList)
             triangleList_index = triangleList_index + 1;
             radar1 = triangleList(triangleList_index, 2); radar2 = triangleList(triangleList_index, 3);
             radar3 = triangleList(triangleList_index, 4);
@@ -49,7 +49,8 @@ function [posCalibrated] = getCalibrateTriangleSize(distMeasured, num_radar)
             end
         end
         if ~triangle_found
-            fprintf("data can't be used to calibrate");
+            fprintf("data can't be used to calibrate\n");
+            return
         end
     end
 

@@ -46,9 +46,8 @@ function[num_top, num_bottom, posAbsolute, distAbsolute, distMeasured] = getRada
         end
     end
 
-    centerPos = rand(3,1);
+    centerPos = normrnd(0,10/3,3,1);
     centerPos(3,1) = 0;
-    centerPos(1:2,1) = centerPos(1:2,1) * 20 -10;
     theta = rand(1) * 2*pi;
     rotationMatrix = [cos(theta), -sin(theta), 0; sin(theta), cos(theta), 0; 0, 0, 1];
     if num_bottom == 1

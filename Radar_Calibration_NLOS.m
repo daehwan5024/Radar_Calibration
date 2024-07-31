@@ -26,7 +26,7 @@ for i=1:num_top
     end
 end
 
-centerPos = rand(3,1);
+centerPos = normrnd(0,10, 3,1);
 centerPos(3,1) = 0;
 centerPos(1:2,1) = centerPos(1:2,1) * 20 -10;
 theta = rand(1) * 2*pi;

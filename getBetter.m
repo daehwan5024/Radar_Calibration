@@ -7,7 +7,7 @@ known(newIndex) = true;
         error = 0;
         for i=1:height(input1)
             for j=1:width(input1)
-                if(known(i) && known(j))
+                if(known(i) && known(j) && ~isnan(input2(i, j)))
                     error = error + (input1(i, j) - input2(i, j))^2;
                 end
             end
