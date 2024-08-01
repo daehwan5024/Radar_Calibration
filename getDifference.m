@@ -35,7 +35,7 @@ function[difference] = getDifference(input1, input2)
                 end
                 d = d/width(input1);
                 if d < best(1,1)
-                    best = [d, k, j, i];
+                    best = [d, i, j, k];
                 end
             end
         end
