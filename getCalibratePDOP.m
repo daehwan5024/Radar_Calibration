@@ -5,11 +5,11 @@ function [posCalibrated] = getCalibratePDOP(distMeasured, num_radar)
       fprintf("Need at least 3 radars\n")
     end
 
-    pdopList = getPDOPList(distMeasured);
-    orders = getInsertOrder(pdopList, num_radar);
+    pdopList = getPDOPList(distMeasured); % list of PDOP [PDOP, target index, radar1 index, radar2 index, radar3 index] is stacked vertically
+    orders = getInsertOrder(pdopList, num_radar); % list of insertion orders, [total PDOP, radar1, radar2, ..., ] is stacked vertically
     posCalibrated = zeros(3, num_radar);
 
-    function[radar1, radar2, radar3] = findPairs(target, usable)
+    function[radar1, radar2, radar3] = findPairs(target, usable) % find target
         for ii = 1:height(pdopList)
             if pdopList(ii, 2) ~= target
                 continue

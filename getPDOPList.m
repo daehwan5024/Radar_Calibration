@@ -1,5 +1,6 @@
 function [pdopList] = getPDOPList(distance)
-%List pdop of all possible pairs.
+% List pdop of all possible pairs.
+% [PDOP, target index, radar1 index, radar2 index, radar3 index] is stacked vertically
 num_radar = width(distance);
     function[pos1, pos2, pos3] = posRelative(target, radar1, radar2, radar3)
         if isnan(distance(radar1, radar2)) || isnan(distance(radar1, radar3)) || isnan(distance(radar1, target)) || isnan(distance(radar2, radar3)) || isnan(distance(radar2, target)) || isnan(distance(radar3, target))

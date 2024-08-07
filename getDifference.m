@@ -29,11 +29,10 @@ function[difference] = getDifference(input1, input2)
                 trans2 = trans2(1:3,:);
                 trans1_r = [trans1(1:2,:); -trans1(3,:)];
                 if sqrt(sum((trans1 - trans2).^2, "all")) < sqrt(sum((trans1_r - trans2).^2, "all"))
-                    d = sqrt(sum((trans1 - trans2).^2, "all"));
+                    d = sqrt(sum((trans1 - trans2).^2/width(input1), "all"));
                 else
-                    d = sqrt(sum((trans1_r - trans2).^2, "all"));
+                    d = sqrt(sum((trans1_r - trans2).^2, "all")/width(input1));
                 end
-                d = d/width(input1);
                 if d < best(1,1)
                     best = [d, i, j, k];
                 end

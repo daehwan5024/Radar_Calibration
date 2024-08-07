@@ -1,6 +1,7 @@
 function [orders] = getInsertOrder(pdopList, num_radar)
     % find the order of inserting radars.
-    % List all possible orders, if impossible, the cost is Inf
+    % [total PDOP(cost), radar1, radar2, ..., ] is stacked vertically
+    % List all possible orders, if impossible, the order isn't listed
     radars = 1:num_radar;
     result = double.empty;
     

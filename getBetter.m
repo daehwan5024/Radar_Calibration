@@ -1,6 +1,5 @@
 function [betterPos] = getBetter(new1, new2, newIndex, posCalibrated, distance, known)
-%Choose better between new1 and new2
-
+% Choose better between new1 and new2
 known(newIndex) = true;
     function[error] = rmse_modified(input1, input2)
         assert(isequal(size(input1), size(input2)))
